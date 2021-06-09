@@ -19,6 +19,16 @@ exports.getTodo = async (req, res) => {
         res.status(404).send(`Todo item with id = ${id} not found`);
     }
 };
+exports.getLastTodo = async (req, res) => {
+    try {
+        await Todos.find((err, docs) => {
+            const data = docs[docs.length-1];
+            res.send(data);
+        });
+    } catch {
+        res.status(404).send('Todo item not found');
+    }
+};
 
 exports.postTodo = async (req, res) => {
     const newData = req.body;

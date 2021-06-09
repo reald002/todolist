@@ -8,8 +8,8 @@ const router = express.Router();
 router.get('/', TodoController.index);
 router.get('/todos', TodoController.getTodos);
 router.post('/todos', jsonParser, TodoController.postTodo);
+router.get('/todos/last', TodoController.getLastTodo);
 router.get('/todos/:id', TodoController.getTodo);
 router.delete('/todos/:id', TodoController.deleteTodo);
 router.patch('/todos/:id', jsonParser, TodoController.patchTodo);
-
 module.exports = router;

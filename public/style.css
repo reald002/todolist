@@ -35,6 +35,17 @@ body{
     justify-content: space-between;
     width: 100%;
 }
+.todo__item-remove{
+    height: auto;
+    display: flex;
+    border: none;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    color: #fff;
+    background-color: #000;
+    cursor: pointer;
+}
 .todo__item-text{
     display: flex;
     height: 100%;
