@@ -8,7 +8,7 @@ const todosScheme = new Schema({
     },
     color: {
         type: String,
-        default: 'red'
+        default: 'rgb(200, 21, 15)'
     },
     checked: {
         type: Boolean,
