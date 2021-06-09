@@ -2,14 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-const mainController = require('../controllers/mainController.js');
+const TodoController = require('../controllers/TodoController.js');
 const router = express.Router();
 
-router.get('/', mainController.index);
-router.get('/todos', mainController.getTodos);
-router.post('/todos', jsonParser, mainController.postTodo);
-router.get('/todos/:id', mainController.getTodo);
-router.delete('/todos/:id', mainController.deleteTodo);
-router.patch('/todos/:id', jsonParser, mainController.patchTodo);
+router.get('/', TodoController.index);
+router.get('/todos', TodoController.getTodos);
+router.post('/todos', jsonParser, TodoController.postTodo);
+router.get('/todos/:id', TodoController.getTodo);
+router.delete('/todos/:id', TodoController.deleteTodo);
+router.patch('/todos/:id', jsonParser, TodoController.patchTodo);
 
 module.exports = router;

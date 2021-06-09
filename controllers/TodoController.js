@@ -29,7 +29,6 @@ exports.postTodo = async (req, res) => {
     } catch {
         res.status(400).send('Error');
     }
-
 };
 
 exports.deleteTodo = async (req, res) => {
@@ -40,8 +39,6 @@ exports.deleteTodo = async (req, res) => {
     } catch {
         res.status(404).send(`Todo item with id = ${id} not found`);
     }
-
-
 };
 
 exports.patchTodo = async (req, res) => {
@@ -54,5 +51,4 @@ exports.patchTodo = async (req, res) => {
     } catch {
         res.status(404).send(`Todo item with id = ${id} not found`);
     }
-
 };
