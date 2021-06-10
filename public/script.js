@@ -51,9 +51,9 @@ async function createTodoElement(obj) {
                 <input id="todo-${id}" class="checkbox" ${checked ? 'checked' : ''} type="checkbox">
             </label>
             <span style="background-color: ${color}" class="todo__item-text">${text}</span>
-            <button id="remove-${id}" name="removeTodo" class="todo__item-remove">Удалить</button>
-    
         </p>
+        <button id="remove-${id}" name="removeTodo" class="todo__item-remove">Удалить</button>
+
     `;
     newElem.querySelector('.todo__item-inner').addEventListener('click', async function (e) {
         e.preventDefault();
