@@ -5,8 +5,9 @@
   "main": "public/script.js",
   "scripts": {
     "test": "jest",
+    "test:watch": "jest --watch",
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon start.js"
   },
   "repository": {
     "type": "git",
