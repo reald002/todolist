@@ -199,3 +199,18 @@ body{
 #color-6 + label::before{
     border-color: yellow;
 }
+.form{
+    display: flex;
+    flex-direction: column;
+}
+.form__title{
+    color: #000;
+}
+.form__input{
+    margin: 10px 0;
+    padding: 5px;
+    font-size: 20px;
+}
+.form__input.btn{
+    cursor: pointer;
+}

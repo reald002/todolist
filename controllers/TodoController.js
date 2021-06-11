@@ -1,13 +1,24 @@
-const Todos = require('../models/todo');
+const Todos = require('../models/Todo');
+const path = require('path');
 
 exports.index = (req, res) => {
-    res.status(200).sendFile(__dirname, 'index.html');
+    res.status(200).sendFile(path.join(__dirname, '..', 'public' , 'index.html'));
+};
+exports.register = (req, res) => {
+    res.status(200).sendFile(path.join(__dirname, '..', 'views', 'register.html'));
+};
+exports.login = (req, res) => {
+    res.status(200).sendFile(path.join(__dirname, '..', 'views', 'login.html'));
 };
 
 exports.getTodos = async (req, res) => {
-    await Todos.find((err, docs) => {
-        res.status(200).send(docs);
-    });
+    try {
+        await Todos.find((err, docs) => {
+            res.status(200).send(docs);
+        });
+    } catch (e) {
+        res.status(404).send(e.reason);
+    }
 };
 
 exports.getTodo = async (req, res) => {

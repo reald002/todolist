@@ -13,9 +13,12 @@ const todosScheme = new Schema({
     checked: {
         type: Boolean,
         default: false
+    },
+    userId: {
+        type: String,
+        required: true
     }
 });
 
 const Todos = mongoose.model('Todos', todosScheme);
-
 module.exports = Todos;
