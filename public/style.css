@@ -45,9 +45,6 @@ body{
     background-color: #000;
     cursor: pointer;
 }
-.todo__item-remove:hover{
-    color: red;
-}
 .todo__item-text{
     display: flex;
     height: 100%;
@@ -59,8 +56,8 @@ body{
     border-bottom-right-radius: 3px;
 }
 .todo__item-checkbox{
-    position: relative;
     display: flex;
+    position: relative;
     justify-content: center;
     align-items: center;
     margin-right: 2px;
@@ -72,44 +69,38 @@ body{
 
     cursor: pointer;
 }
-.todo__item-checkbox::after{
+.todo__item-checkbox::after {
     content: "";
     width: 15px;
     height: 15px;
     position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: transparent;
-    left: 50%;
     top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
-    border: 1px solid black;
+    border: 1px solid #000;
     z-index: 1;
 }
 .todo__item.checked .todo__item-checkbox::after{
     background-color: blue;
 }
-.todo__item.checked .todo__item-checkbox::before{
-    display: block;
-}
 .todo__item-checkbox::before{
-    display: none;
     content: "";
-    border-top: 2px solid #fff;
-    border-right: 2px solid #fff;
     width: 11px;
     height: 5px;
     position: absolute;
-    z-index: 2;
-    left: 50%;
+    border-top: 2px solid #fff;
+    border-right: 2px solid #fff;
     top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%) rotate(120deg);
+    z-index: 2;
 }
-
 .checkbox{
     display: none;
+}
+.todo__item-remove:hover{
+    color: red;
 }
 .add-block{
     display: flex;
