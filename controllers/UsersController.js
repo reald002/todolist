@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const Users = require('../models/User');
 
 exports.getUsers = async (req, res) => {
@@ -14,14 +15,25 @@ exports.getUsers = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const userData = await req.body;
-        const match = await Users.findOne({
+        const candidate = await Users.findOne({
             username: userData.username,
-            password: userData.password
         });
-        if(match){
-            res.status(200).send('You are logged in!');
+        if(candidate){
+            const passwordResult = bcrypt.compareSync(userData.password, candidate.password);
+            if(passwordResult){
+                const token = jwt.sign({
+                    username: candidate.username,
+                    userId: candidate._id
+                }, process.env.JWT, {expiresIn: 60 * 60});
+                // localStorage.setItem('token', `Bearer ${token}`);
+                res.status(200).send({
+                    token: `Bearer ${token}`
+                });
+            } else {
+                res.status(401).send('Wrong password.');
+            }
         } else {
-            res.status(401).send('Wrong data');
+            res.status(404).send('User not found');
         }
     } catch (e) {
         res.status(404).send(e.reason);
@@ -33,7 +45,7 @@ exports.deleteAll = async (req, res) => {
     res.send('All Users Are Removed');
 };
 
-exports.registerNewUser = async (req, res) => {
+exports.register = async (req, res) => {
     const userData = await req.body;
     const sameName = await Users.findOne({
         username: userData.username
@@ -42,13 +54,13 @@ exports.registerNewUser = async (req, res) => {
     if(sameName){
         res.status(401).send(`Имя ${sameName.username} уже занято`);
     } else {
-        const usersCount = await Users.find();
-        userData.userId = usersCount.length;
+        // const usersCount = await Users.find();
+        // userData.userId = usersCount.length;
         const salt = bcrypt.genSaltSync(10);
         const saveData = new Users({
             username: userData.username,
             password: bcrypt.hashSync(userData.password, salt),
-            userId: userData.userId
+            // userId: userData.userId
         });
         try {
             await Users.create(saveData);

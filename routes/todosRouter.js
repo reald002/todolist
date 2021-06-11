@@ -1,11 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
-
+const passport = require('passport');
 const TodoController = require('../controllers/TodoController.js');
 const todosRouter = express.Router();
 
-todosRouter.get('/', TodoController.index);
+todosRouter.get('/', passport.authenticate('jwt', {session: false}), TodoController.index);
 todosRouter.get('/register', TodoController.register);
 todosRouter.get('/login', TodoController.login);
 todosRouter.get('/todos', TodoController.getTodos);

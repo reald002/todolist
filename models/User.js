@@ -10,10 +10,10 @@ const userScheme = new Schema({
         type: String,
         required: true
     },
-    userId: {
-        type: String,
-        required: true
-    }
+    // userId: {
+    //     type: String,
+    //     required: true
+    // }
 });
 
 const Users = mongoose.model('Users', userScheme);
