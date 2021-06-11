@@ -4,58 +4,74 @@ const request = supertest(app);
 const mongoose = require('mongoose');
 const Todos = require('../models/todo');
 
-let realDbData;
+const MOCK_DATA =
+    {
+        color: 'rgb(255, 255, 0)',
+        text: 'Работает',
+        checked: false
+    };
+
+const IDs = [];
 
 beforeAll(async () => {
-    const url = `mongodb+srv://${process.env.MONGO_LOGIN}:${process.env.MONGO_PASSWORD}@${process.env.CLUSTER_NAME}/${process.env.DB_NAME}`;
-    await mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: true });
-    realDbData = await request.get('/todos');
-    await mongoose.disconnect();
     const testUrl = `mongodb+srv://${process.env.MONGO_LOGIN}:${process.env.MONGO_PASSWORD}@${process.env.CLUSTER_NAME}/tests`;
     await mongoose.connect(testUrl, { useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: true });
-});
-beforeEach(async () => {
-    await Todos.deleteMany();
-    await Todos.insertMany(realDbData.body);
+    const inserted = await Todos.insertMany([MOCK_DATA]);
+    inserted.forEach(e => {
+        IDs.push(e._id);
+    });
 });
 afterAll(async () => {
     await Todos.deleteMany();
     await mongoose.disconnect();
 });
 describe('Get Endpoints', () => {
-    it('should get "argafdg" todo', async () => {
-        const res = await request.get('/todos/60c25a38340c9c1e1f32641b');
-        expect([res.body.text, res.body.color, res.body.checked]).toEqual(['argafdg', 'rgb(255, 192, 203)', false]);
-    });
     it('should get "Работает" todo', async () => {
-        const res = await request.get('/todos/60c25b5fed4b7d23b61c7e8f');
-        expect([res.body.text, res.body.color, res.body.checked]).toEqual(['Работает', 'rgb(255, 255, 0)', false]);
+        const res = await request.get(`/todos/${IDs[0]}`);
+        expect([res.body.text, res.body.color, res.body.checked]).toEqual([MOCK_DATA.text, MOCK_DATA.color, MOCK_DATA.checked]);
     });
-    it('should get "Да" todo', async () => {
-        const res = await request.get('/todos/last');
-        expect([res.body.text, res.body.color, res.body.checked]).toEqual(['Да', 'rgb(0, 191, 255)', false]);
+    it('should get error todo', async () => {
+        const res = await request.get('/todos/12345');
+        expect(res.text).toEqual('Todo item with id = 12345 not found');
     });
 });
 describe('Post Endpoints', () => {
+    it('should return error todo', async () => {
+        const res = await request.post('/todos').send({
+            // 'text': 'test-element',
+            'color': 'green',
+        });
+        expect(res.text).toEqual('Error');
+    });
     it('should post {"text": "test-element", "color": "green"} todo', async () => {
         const res = await request.post('/todos').send({
             'text': 'test-element',
             'color': 'green',
         });
-        expect([res.body.color, res.body.text]).toEqual(['green', 'test-element']);
+        expect([res.body.text, res.body.color]).toEqual(['test-element', 'green']);
     });
 });
 describe('Patch Endpoints', () => {
-    it('should change todo.text "Да" to "Нет"', async () => {
-        const res = await request.patch('/todos/60c25b64ed4b7d23b61c7e90').send({
+    it('should change todo.text "Работает" to "Не работает"', async () => {
+        const res = await request.patch(`/todos/${IDs[0]}`).send({
+            'text': 'Не работает',
+        });
+        expect(res.body.text).toEqual('Не работает');
+    });
+    it('should return error"', async () => {
+        const res = await request.patch('/todos/12345').send({
             'text': 'Нет',
         });
-        expect([res.body.text]).toEqual(['Нет']);
+        expect(res.text).toEqual('Todo item with id = 12345 not found');
     });
 });
 describe('Delete Endpoints', () => {
-    it('should delete "argafdg" todo', async () => {
-        const res = await request.delete('/todos/60c25a38340c9c1e1f32641b');
-        expect(res.body.text).toEqual('argafdg');
+    it('should delete "Не работает" todo', async () => {
+        const res = await request.delete(`/todos/${IDs[0]}`);
+        expect(res.body.text).toEqual('Не работает');
+    });
+    it('should return error', async () => {
+        const res = await request.delete('/todos/123');
+        expect(res.text).toEqual('Todo item with id = 123 not found');
     });
 });
