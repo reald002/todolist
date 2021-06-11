@@ -53,7 +53,6 @@ async function createTodoElement(obj) {
             <span style="background-color: ${color}" class="todo__item-text">${text}</span>
         </p>
         <button id="remove-${id}" name="removeTodo" class="todo__item-remove">Удалить</button>
-
     `;
     newElem.querySelector('.todo__item-inner').addEventListener('click', async function (e) {
         e.preventDefault();
