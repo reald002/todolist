@@ -4,9 +4,8 @@ const Users = require('../models/User');
 
 exports.getUsers = async (req, res) => {
     try {
-        await Users.find((err, docs) => {
-            res.status(200).send(docs);
-        });
+        const docs = await Users.find();
+        res.status(200).send(docs);
     } catch (e) {
         res.status(404).send(e.reason);
     }
@@ -19,16 +18,14 @@ exports.login = async (req, res) => {
             username: userData.username,
         });
         if(candidate){
-            const passwordResult = bcrypt.compareSync(userData.password, candidate.password);
-            if(passwordResult){
+            const isValidPassword = bcrypt.compareSync(userData.password, candidate.password);
+            if(isValidPassword){
                 const token = jwt.sign({
                     username: candidate.username,
                     userId: candidate._id
                 }, process.env.JWT, {expiresIn: 60 * 60});
                 // localStorage.setItem('token', `Bearer ${token}`);
-                res.status(200).send({
-                    token: `Bearer ${token}`
-                });
+                res.status(200).send({ token });
             } else {
                 res.status(401).send('Wrong password.');
             }
@@ -54,13 +51,10 @@ exports.register = async (req, res) => {
     if(sameName){
         res.status(401).send(`Имя ${sameName.username} уже занято`);
     } else {
-        // const usersCount = await Users.find();
-        // userData.userId = usersCount.length;
         const salt = bcrypt.genSaltSync(10);
         const saveData = new Users({
             username: userData.username,
             password: bcrypt.hashSync(userData.password, salt),
-            // userId: userData.userId
         });
         try {
             await Users.create(saveData);

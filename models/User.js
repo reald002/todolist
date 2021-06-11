@@ -10,7 +10,7 @@ const userScheme = new Schema({
         type: String,
         required: true
     },
-    // userId: {
+    // todoId: {
     //     type: String,
     //     required: true
     // }

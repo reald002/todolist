@@ -14,10 +14,6 @@ const todosScheme = new Schema({
         type: Boolean,
         default: false
     },
-    userId: {
-        type: String,
-        required: true
-    }
 });
 
 const Todos = mongoose.model('Todos', todosScheme);
