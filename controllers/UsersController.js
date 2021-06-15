@@ -24,7 +24,6 @@ exports.login = async (req, res) => {
                     username: candidate.username,
                     userId: candidate._id
                 }, process.env.JWT, {expiresIn: 60 * 60});
-                // localStorage.setItem('token', `Bearer ${token}`);
                 res.status(200).send({ token });
             } else {
                 res.status(401).send('Wrong password.');
@@ -49,7 +48,7 @@ exports.register = async (req, res) => {
     });
 
     if(sameName){
-        res.status(401).send(`Имя ${sameName.username} уже занято`);
+        res.status(401).send(`Name '${sameName.username}' already exist`);
     } else {
         const salt = bcrypt.genSaltSync(10);
         const saveData = new Users({

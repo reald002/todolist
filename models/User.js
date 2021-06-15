@@ -10,10 +10,6 @@ const userScheme = new Schema({
         type: String,
         required: true
     },
-    // todoId: {
-    //     type: String,
-    //     required: true
-    // }
 });
 
 const Users = mongoose.model('Users', userScheme);
