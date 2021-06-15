@@ -2,7 +2,7 @@ const supertest = require('supertest');
 const app = require('../server');
 const request = supertest(app);
 const mongoose = require('mongoose');
-const Todos = require('../models/todo');
+const Todos = require('../models/Todo');
 
 const MOCK_DATA =
     {
