@@ -1,0 +1,216 @@
+*, *::after, *::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-size: 16px;
+    color: #fff;
+}
+.container{
+    width: 600px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #dedede;
+    border-radius: 3px;
+}
+.todo{
+    list-style: none;
+    margin-bottom: 20px;
+}
+.todo__item{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2px;
+    min-height: 50px;
+
+    cursor: pointer;
+}
+.todo__item-inner:hover{
+    filter: brightness(110%);
+}
+.todo__item-inner{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.todo__item-remove{
+    height: auto;
+    display: flex;
+    border: none;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    color: #fff;
+    background-color: #000;
+    cursor: pointer;
+}
+.todo__item-text{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    min-height: 58px;
+    padding: 20px;
+    background-color: greenyellow;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+.todo__item-checkbox{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    margin-right: 2px;
+    width: 58px;
+    min-height: 58px;
+    background-color: greenyellow;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+
+    cursor: pointer;
+}
+.todo__item-checkbox::after {
+    content: "";
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #000;
+    z-index: 1;
+}
+.todo__item.checked .todo__item-checkbox::after{
+    background-color: blue;
+}
+.todo__item-checkbox::before{
+    content: "";
+    width: 11px;
+    height: 5px;
+    position: absolute;
+    border-top: 2px solid #fff;
+    border-right: 2px solid #fff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(120deg);
+    z-index: 2;
+}
+.checkbox{
+    display: none;
+}
+.todo__item-remove:hover{
+    color: red;
+}
+.add-block{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 55px;
+    width: 100%;
+    border-radius: 3px;
+    background-color: white;
+    border: 1px solid #c2c2c2;
+    padding: 15px;
+}
+.add-input{
+    border: none;
+    outline: none;
+    font-size: 16px;
+    flex: 1;
+    margin-right: 20px;
+}
+.add-btn{
+    height: 40px;
+    padding: 10px 20px;
+    background-color: #44a744;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+.todo__item.checked .todo__item-checkbox{
+    background-color: grey !important;
+}
+.todo__item.checked .todo__item-text{
+    background-color: grey !important;
+}
+.colors{
+    display: flex;
+    margin-right: 10px;
+}
+.colors .color-radio{
+    display: none;
+}
+.colors .color-label{
+    display: block;
+    width: 16px;
+    height: 16px;
+    position: relative;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.colors .color-label::before{
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.colors .color-radio:checked +label::before{
+    border-width: 1px;
+    border-style: solid;
+}
+#color-1 + label{
+    background-color: #ff5e5e;
+}
+#color-1 + label::before{
+    border-color: #ff5e5e;
+}
+#color-2 + label{
+    background-color: pink;
+}
+#color-2 + label::before{
+    border-color: pink;
+}
+#color-3 + label{
+    background-color: purple;
+}
+#color-3 + label::before{
+    border-color: purple;
+}
+#color-4 + label{
+    background-color: deepskyblue;
+}
+#color-4 + label::before{
+    border-color: deepskyblue;
+}
+#color-5 + label{
+    background-color: lightblue;
+}
+#color-5 + label::before{
+    border-color: lightblue;
+}
+#color-6 + label{
+    background-color: yellow;
+}
+#color-6 + label::before{
+    border-color: yellow;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+}
+.form__title{
+    color: #000;
+}
+.form__input{
+    margin: 10px 0;
+    padding: 5px;
+    font-size: 20px;
+}
+.form__input.btn{
+    cursor: pointer;
+}

@@ -6,7 +6,8 @@ const TodoController = require('../controllers/TodoController.js');
 const jsonParser = bodyParser.json();
 const todosRouter = express.Router();
 
-todosRouter.get('/', passport.authenticate('jwt', {session: false}), TodoController.index);
+// todosRouter.get('/', passport.authenticate('jwt', {session: false}), TodoController.index);
+todosRouter.get('/', TodoController.index);
 todosRouter.get('/register', TodoController.register);
 todosRouter.get('/login', TodoController.login);
 todosRouter.get('/todos', TodoController.getTodos);
