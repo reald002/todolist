@@ -13,9 +13,8 @@ const todosScheme = new Schema({
     checked: {
         type: Boolean,
         default: false
-    }
+    },
 });
 
 const Todos = mongoose.model('Todos', todosScheme);
-
 module.exports = Todos;
